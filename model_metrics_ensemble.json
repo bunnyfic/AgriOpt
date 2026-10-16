@@ -1,0 +1,32 @@
+{
+  "best_model": "Stacking Ensemble",
+  "accuracy": 0.9977272727272727,
+  "macro_f1": 0.997725851384388,
+  "all_results": {
+    "Random Forest (tuned)": {
+      "accuracy": 0.9954545454545455,
+      "macro_f1": 0.9954517027687758
+    },
+    "KNN (tuned)": {
+      "accuracy": 0.975,
+      "macro_f1": 0.9747664610040345
+    },
+    "SVM (tuned)": {
+      "accuracy": 0.9886363636363636,
+      "macro_f1": 0.988620707491054
+    },
+    "Gradient Boosting": {
+      "accuracy": 0.9886363636363636,
+      "macro_f1": 0.9886735002267737
+    },
+    "Voting Ensemble": {
+      "accuracy": 0.9931818181818182,
+      "macro_f1": 0.9931690047222781
+    },
+    "Stacking Ensemble": {
+      "accuracy": 0.9977272727272727,
+      "macro_f1": 0.997725851384388
+    }
+  },
+  "note": "Model requires scaled input if best_model is KNN/SVM/Voting/Stacking; Random Forest/GB use raw features."
+}
