@@ -1,4 +1,4 @@
-const API_BASE = "https://agri-opt-two.vercel.app/";
+const API_BASE = "https://agri-opt-two.vercel.app";
 
 // What the farmer has done on each page (shared with the AI assistant)
 const siteState = { crop: null, suitability: null, explanation: null, disease: null, soilAdvice: null };
