@@ -8,7 +8,7 @@ passlib[bcrypt]>=1.7.4
 bcrypt==3.2.2
 pandas>=2.0.0
 numpy>=1.24.0
-scikit-learn>=1.2.0
+scikit-learn==1.8.0
 joblib>=1.3.0
 python-multipart>=0.0.6
 shap>=0.0.6
