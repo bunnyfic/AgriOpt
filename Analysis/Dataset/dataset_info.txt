@@ -1,0 +1,5 @@
+Crop_recommendation.csv
+source : kaggle 
+link : https://www.kaggle.com/datasets/eonyushi/crop-recommendation
+rows : 2200
+col : 8
