@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AgriOpt — Crop recommendation &amp; disease detection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="Styles.css">
+</head>
+<body>
+
+<aside class="ribbon" id="ribbon" aria-label="Main navigation">
+  <div class="ribbon-top">
+    <a class="ribbon-brand" href="#home" aria-label="AgriOpt home">
+    <span>AgriOpt</span>
+  </a>
+    <button class="menu-close" id="menuClose" type="button" aria-label="Close menu" aria-expanded="true" aria-controls="ribbon" title="Close menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <nav class="ribbon-nav">
+    <a class="ribbon-link" href="#home" data-view="home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v10h13V10"/></svg>
+      Home
+    </a>
+    <a class="ribbon-link" href="#crop" data-view="crop">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V11"/><path d="M12 11C12 7 9 5 6 5C6 9 8.5 11 12 11Z"/><path d="M12 13C12 9.5 14.5 7.5 18 7.5C18 11 15.5 13 12 13Z"/></svg>
+      Crop recommendation
+    </a>
+    <a class="ribbon-link" href="#soil" data-view="soil">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 19h18"/><path d="M5 15c2-3 4-3 7 0s5 3 7 0"/><path d="M12 4v7"/><path d="M12 7c-3 0-5-1.5-5-4 3 0 5 1.5 5 4Z"/><path d="M12 9c3 0 5-1.5 5-4-3 0-5 1.5-5 4Z"/></svg>
+      Soil improvement
+    </a>
+    <a class="ribbon-link" href="#explain" data-view="explain">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a7 7 0 0 0-4 12.7c.7.5 1 1.1 1 1.8h6c0-.7.3-1.3 1-1.8A7 7 0 0 0 12 3Z"/><path d="M9 21h6M10 18h4"/></svg>
+      Why this recommendation?
+    </a>
+    <a class="ribbon-link" href="#disease" data-view="disease">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19C5 10 10 5 19 5C19 14 14 19 5 19Z"/><path d="M5 19 13 11"/></svg>
+      Crop disease detection
+    </a>
+    <a class="ribbon-link" href="#dataset" data-view="dataset">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5C4 4.1 7.6 3 12 3s8 1.1 8 2.5S16.4 8 12 8 4 6.9 4 5.5Z"/><path d="M4 5.5v6C4 12.9 7.6 14 12 14s8-1.1 8-2.5v-6"/><path d="M4 11.5v6C4 18.9 7.6 20 12 20c2.3 0 4.4-.3 5.9-.9"/><path d="M20 12v4"/><circle cx="18" cy="18" r="3"/></svg>
+      Dataset info &amp; credits
+    </a>
+  </nav>
+  <div class="ribbon-tools">
+    <button class="theme-toggle" id="themeToggle" role="switch" aria-checked="false" aria-label="Toggle light and dark mode">
+      <span class="icon" id="iconSun">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </span>
+      <span class="toggle-track"><span class="toggle-thumb"></span></span>
+      <span class="icon" id="iconMoon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+      </span>
+    </button>
+    <button class="assistant-btn" id="assistantBtn" type="button" aria-label="Ask Sprout, the farm assistant" aria-expanded="false" aria-controls="chat-panel" title="Ask Sprout">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><use href="#sprout-face"/></svg>
+    </button>
+  </div>
+</aside>
+
+<div class="menu-float">
+  <button class="menu-btn" id="menuOpen" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="ribbon" title="Open menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  <button class="assistant-btn" id="assistantBtnFloat" type="button" aria-label="Ask Sprout, the farm assistant" aria-expanded="false" aria-controls="chat-panel" title="Ask Sprout">
+    <svg viewBox="0 0 64 64" aria-hidden="true"><use href="#sprout-face"/></svg>
+  </button>
+</div>
+
+<main class="content">
+
+<section class="view" id="view-home">
+  <div class="home">
+    <h1>AgriOpt</h1>
+    <p class="intro">AgriOpt recommends crops from your soil and climate readings. See why a crop was recommended, get AI advice to improve your soil for a crop you choose, or upload crop photos for disease diagnosis and treatment suggestions.</p>
+    <a class="cta" href="#crop">Open crop recommendation</a>
+    <a class="cta cta-secondary" href="#soil">Improve soil for a crop</a>
+    <a class="cta cta-secondary" href="#disease">Detect crop disease</a>
+    <ul class="facts">
+      <li><strong>22</strong>crops the model can recommend</li>
+      <li><strong>7</strong>soil and climate readings per sample</li>
+      <li><strong>99%+</strong>accuracy on held-out test data</li>
+    </ul>
+  </div>
+</section>
+
+<section class="view" id="view-crop" hidden>
+<div class="shell">
+  <header>
+    <div class="header-row">
+      <div class="brand">
+        <div class="logo-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round">
+            <path d="M12 20V11" />
+            <path d="M12 11C12 7 9 5 6 5C6 9 8.5 11 12 11Z" />
+            <path d="M12 13C12 9.5 14.5 7.5 18 7.5C18 11 15.5 13 12 13Z" />
+            <line class="soil-line" x1="4" y1="20" x2="20" y2="20" />
+          </svg>
+        </div>
+        <div class="brand-text">
+          <p class="eyebrow">Soil &amp; Climate Sample Analysis</p>
+          <h1>Crop recommendation</h1>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="tagline lede">Enter a soil sample's nutrient readings and local climate conditions to get a data-driven crop recommendation, backed by a trained ensemble model.</p>
+  </header>
+
+  <div class="layout">
+    <!-- LEFT: input panel -->
+    <div class="card sample-panel">
+      <p class="panel-label">Sample Readings</p>
+      <div id="horizons"></div>
+      <button class="analyze-btn" id="analyzeBtn">Analyze Sample</button>
+    </div>
+
+    <!-- RIGHT: results panel -->
+    <div class="card report-panel">
+      <p class="panel-label">Field Report</p>
+
+      <div class="empty-state" id="emptyState">
+        <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+          <path d="M12 20V11" />
+          <path d="M12 11C12 7 9 5 6 5C6 9 8.5 11 12 11Z" />
+          <path d="M12 13C12 9.5 14.5 7.5 18 7.5C18 11 15.5 13 12 13Z" />
+          <line x1="4" y1="20" x2="20" y2="20" />
+        </svg>
+        Adjust the sample readings on the left and run an analysis to see the recommended crop here.
+      </div>
+
+      <div class="result-headline" id="resultHeadline">
+        <p class="tag">Recommended Crop</p>
+        <p class="crop-name" id="cropName">—</p>
+        <p class="confidence" id="cropConfidence">—</p>
+      </div>
+
+      <div class="top3-list" id="top3List"></div>
+      <a class="explain-link" id="explainLink" href="#explain" hidden>Why was this crop recommended?</a>
+
+      <div class="suitability-section" id="suitabilitySection">
+        <h3>Check a Different Crop</h3>
+        <div class="suitability-row">
+          <select id="cropSelect"></select>
+          <button id="checkBtn">Check</button>
+        </div>
+        <div class="verdict-card" id="verdictCard">
+          <div class="verdict-title" id="verdictTitle"></div>
+          <div id="verdictReasons"></div>
+        </div>
+      </div>
+
+      <div class="radar-section" id="radarSection">
+        <div class="radar-head">
+          <h3>Nutrient &amp; Climate Match</h3>
+          <p class="radar-sub" id="radarSub">Your sample vs. typical conditions for <span id="radarCropName">—</span></p>
+        </div>
+        <div class="radar-wrap">
+          <svg id="radarChart" viewBox="0 0 340 320"></svg>
+          <div class="radar-legend">
+            <span class="legend-item"><span class="legend-dot dot-sample"></span>Your sample</span>
+            <span class="legend-item"><span class="legend-dot dot-ideal"></span>Typical for crop</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="api-error" id="apiError"></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="view" id="view-soil" hidden>
+  <div class="shell soil-shell">
+    <header>
+      <div class="brand">
+        <div class="logo-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 19h18" />
+            <path d="M5 15c2-3 4-3 7 0s5 3 7 0" />
+            <path d="M12 4v7" />
+            <path d="M12 7c-3 0-5-1.5-5-4 3 0 5 1.5 5 4Z" />
+            <path d="M12 9c3 0 5-1.5 5-4-3 0-5 1.5-5 4Z" />
+          </svg>
+        </div>
+        <div class="brand-text">
+          <p class="eyebrow">AI soil analysis</p>
+          <h1>Improve soil for your crop</h1>
+        </div>
+      </div>
+      <p class="tagline lede">Enter the same soil and local climate readings used by Crop recommendation, import its latest analyzed sample, and choose the crop you want to grow. AI will describe the measured soil profile and suggest crop-specific amendments and supplements.</p>
+    </header>
+
+    <div class="soil-layout">
+      <form class="card soil-form" id="soil-form">
+        <p class="panel-label">Soil sample and target crop</p>
+        <label class="disease-crop-label" for="soil-crop">Crop you want to grow</label>
+        <select class="disease-crop" id="soil-crop" disabled required>
+          <option value="">Loading available crops…</option>
+        </select>
+        <p class="disease-crop-help">Choose a crop from the Crop recommendation model.</p>
+
+        <button class="soil-import" id="soil-import" type="button" disabled>Import latest analyzed sample</button>
+        <p class="soil-import-status" id="soil-import-status">Analyze a sample on the Crop recommendation page to enable importing.</p>
+
+        <div class="soil-fields">
+          <label for="soil-N">Nitrogen (N), kg/ha</label>
+          <input id="soil-N" name="N" type="number" min="0" step="any" required />
+          <label for="soil-P">Phosphorus (P), kg/ha</label>
+          <input id="soil-P" name="P" type="number" min="0" step="any" required />
+          <label for="soil-K">Potassium (K), kg/ha</label>
+          <input id="soil-K" name="K" type="number" min="0" step="any" required />
+          <label for="soil-ph">Soil pH</label>
+          <input id="soil-ph" name="ph" type="number" min="0" max="14" step="any" required />
+          <p class="soil-field-heading">Local climate context (optional)</p>
+          <label for="soil-temperature">Temperature (°C)</label>
+          <input id="soil-temperature" name="temperature" type="number" min="-80" max="60" step="any" />
+          <label for="soil-humidity">Humidity (%)</label>
+          <input id="soil-humidity" name="humidity" type="number" min="0" max="100" step="any" />
+          <label for="soil-rainfall">Rainfall (mm)</label>
+          <input id="soil-rainfall" name="rainfall" type="number" min="0" step="any" />
+        </div>
+
+        <label class="disease-crop-label soil-texture-label" for="soil-texture">Soil texture (if known)</label>
+        <select class="disease-crop" id="soil-texture">
+          <option value="unknown">Not sure / not tested</option>
+          <option value="sandy">Sandy</option>
+          <option value="loamy">Loamy</option>
+          <option value="silty">Silty</option>
+          <option value="clayey">Clayey</option>
+        </select>
+        <p class="soil-texture-note">Texture cannot be determined from nutrient, pH, or climate values alone. Select it only if you know it.</p>
+
+        <button class="analyze-btn" id="soil-analyze" type="submit">Analyze soil for this crop</button>
+        <div class="soil-error" id="soil-error" role="alert" hidden></div>
+      </form>
+
+      <div class="card soil-report">
+        <p class="panel-label">Soil report and improvement plan</p>
+        <div class="soil-empty" id="soil-empty">Choose a crop, enter the soil test results, and request an AI analysis to see your soil profile and crop-specific recommendations.</div>
+        <div class="soil-result" id="soil-result" hidden></div>
+      </div>
+    </div>
+    <p class="disclaimer soil-disclaimer">AI suggestions are guidance, not a lab diagnosis or fertilizer prescription. Confirm nutrient needs with a recent soil test or local agronomist. Use amendments and fertilizers only as directed on their labels; over-application can damage crops and water quality.</p>
+  </div>
+</section>
+
+<section class="view" id="view-explain" hidden>
+  <div class="shell explanation-shell">
+    <header>
+      <div class="brand">
+        <div class="logo-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round">
+            <path d="M12 20V11" />
+            <path d="M12 11C12 7 9 5 6 5C6 9 8.5 11 12 11Z" />
+            <path d="M12 13C12 9.5 14.5 7.5 18 7.5C18 11 15.5 13 12 13Z" />
+          </svg>
+        </div>
+        <div class="brand-text">
+          <p class="eyebrow">Explainable crop recommendation</p>
+          <h1>Why did the model recommend this crop?</h1>
+        </div>
+      </div>
+      <p class="tagline lede">SHAP (Shapley Additive Explanations) shows how each soil and climate reading shifted the model's confidence for your recommended crop, compared with a typical reference sample.</p>
+    </header>
+
+    <div class="card explanation-panel">
+      <p class="panel-label">Recommendation explanation</p>
+      <div class="explanation-empty" id="explanation-empty">
+        Run an analysis on the Crop recommendation page first. This page will then explain that result.
+      </div>
+      <div class="explanation-error" id="explanation-error" role="alert" hidden></div>
+      <button class="analyze-btn" id="explain-btn" type="button" disabled>Explain latest recommendation with SHAP</button>
+      <div class="explanation-result" id="explanation-result" hidden></div>
+    </div>
+  </div>
+</section>
+
+<section class="view" id="view-disease" hidden>
+  <div class="disease">
+   <div class="disease-main">
+    <div class="brand">
+      <div class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 19C5 10 10 5 19 5C19 14 14 19 5 19Z" />
+        <path d="M5 19 13 11" />
+      </svg></div>
+      <div class="brand-text">
+        <p class="eyebrow">AI crop diagnosis</p>
+        <h1>Crop disease detection &amp; treatment</h1>
+      </div>
+    </div>
+    <p class="lede">Select the crop and the part shown, then upload a clear photo of its leaf, fruit, flower, stem, root, or whole plant. The AI will look for likely diseases or pests and suggest treatment options for the selected crop.</p>
+
+    <label class="disease-crop-label" for="disease-crop">Crop shown in the photo</label>
+    <select class="disease-crop" id="disease-crop" disabled required>
+      <option value="">Loading available crops…</option>
+    </select>
+    <p class="disease-crop-help">Choose a crop supported by the Crop recommendation system.</p>
+
+    <label class="disease-crop-label" for="disease-part">Part shown in the photo</label>
+    <select class="disease-crop disease-part" id="disease-part" required>
+      <option value="">Choose the affected part</option>
+      <option value="leaf">Leaf</option>
+      <option value="fruit">Fruit or yield</option>
+      <option value="flower">Flower</option>
+      <option value="stem">Stem or branch</option>
+      <option value="root">Root</option>
+      <option value="whole plant">Whole plant</option>
+      <option value="other">Other / not sure</option>
+    </select>
+    <p class="disease-crop-help">Select the part with visible symptoms so the AI can focus its diagnosis.</p>
+
+    <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Choose a photo of the selected crop">
+      <input type="file" id="disease-file" accept="image/jpeg,image/png,image/webp" hidden />
+      <img id="disease-preview" alt="Selected crop disease photo" hidden />
+      <div class="dropzone-empty" id="dropzone-empty">
+        <strong>Drop a photo of the affected crop part or click to choose</strong>
+        <span>JPG, PNG or WebP</span>
+      </div>
+    </div>
+
+    <div class="photo-actions">
+      <button class="photo-btn" id="camera-btn" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.6-2.4h6.8L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1Z"/><circle cx="12" cy="13" r="3.6"/></svg>
+        Take a photo with camera
+      </button>
+      <input type="file" id="camera-file" accept="image/*" capture="environment" hidden />
+    </div>
+
+    <button class="analyze-btn" id="disease-btn" type="button" disabled>Detect disease &amp; suggest treatment</button>
+
+    <div class="disease-error" id="disease-error" role="alert" hidden></div>
+    <div class="disease-result" id="disease-result" hidden></div>
+
+    <p class="disclaimer">This is an AI estimate, not a confirmed diagnosis or prescription. For serious or spreading problems, ask a local agricultural extension officer. Only use treatments approved for this crop and problem in your area, and follow the product label.</p>
+   </div>
+
+   <aside class="disease-side" aria-label="Helpful tips for farmers">
+    <div class="side-card">
+      <h3>Take a better photo</h3>
+      <ul>
+        <li>Get close and fill the frame with the affected crop part.</li>
+        <li>Use daylight. Avoid flash and harsh shadows.</li>
+        <li>Hold steady so the leaf is sharp, not blurry.</li>
+        <li>Show the symptoms and some healthy tissue, if possible.</li>
+        <li>One crop per photo. If unsure, try a few clear views.</li>
+      </ul>
+    </div>
+
+    <div class="side-card">
+      <div class="side-head">
+        <h3>Recent checks</h3>
+        <button class="side-clear" id="history-clear" type="button" hidden>Clear</button>
+      </div>
+      <p class="side-empty" id="history-empty">Your last results will appear here. They are saved only on this device.</p>
+      <ul class="history-list" id="history-list"></ul>
+    </div>
+
+    <div class="side-card">
+      <h3>Using treatments safely</h3>
+      <ul>
+        <li>Use a medication only if it is approved for this crop and problem locally.</li>
+        <li>Follow the product label exactly; never guess a dose or mix products.</li>
+        <li>Wear the protective equipment listed on the label.</li>
+        <li>Keep pesticides away from people, animals, food and water.</li>
+        <li>Dispose of infected plant material according to local guidance.</li>
+      </ul>
+    </div>
+   </aside>
+  </div>
+</section>
+
+<section class="view" id="view-dataset" hidden>
+  <div class="shell dataset-shell">
+    <header>
+      <div class="brand">
+        <div class="logo-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 5.5C4 4.1 7.6 3 12 3s8 1.1 8 2.5S16.4 8 12 8 4 6.9 4 5.5Z" />
+            <path d="M4 5.5v6C4 12.9 7.6 14 12 14s8-1.1 8-2.5v-6" />
+            <path d="M4 11.5v6C4 18.9 7.6 20 12 20c2.3 0 4.4-.3 5.9-.9" />
+            <path d="M20 12v4" />
+            <circle cx="18" cy="18" r="3" />
+          </svg>
+        </div>
+        <div class="brand-text">
+          <p class="eyebrow">Transparency &amp; attribution</p>
+          <h1>Dataset info &amp; credits</h1>
+        </div>
+      </div>
+      <p class="tagline">Learn which dataset supports crop recommendations and how crop disease results are produced.</p>
+    </header>
+
+    <div class="dataset-grid">
+      <article class="card dataset-card">
+        <p class="panel-label">Crop recommendation dataset</p>
+        <h2>Crop Recommendation Dataset</h2>
+        <dl class="dataset-facts">
+          <div><dt>Project file</dt><dd><code>Crop_recommendation.csv</code></dd></div>
+          <div><dt>Source</dt><dd>Kaggle</dd></div>
+          <div><dt>Rows</dt><dd>2,200</dd></div>
+          <div><dt>Columns</dt><dd>8</dd></div>
+        </dl>
+        <p>The dataset contains soil and climate readings used to train the crop recommendation model, along with the crop label. Its inputs are nitrogen (N), phosphorus (P), potassium (K), temperature, humidity, soil pH, and rainfall.</p>
+        <p class="dataset-credit">Dataset credit: eonyushi on Kaggle.</p>
+        <a class="dataset-source" href="https://www.kaggle.com/datasets/eonyushi/crop-recommendation" target="_blank" rel="noopener noreferrer">View the original Kaggle dataset</a>
+        <p class="dataset-note">Please consult the original dataset page for its license, terms of use, and any updates.</p>
+      </article>
+
+      <article class="card dataset-card">
+        <p class="panel-label">Crop disease detection</p>
+        <h2>AI image analysis</h2>
+        <p>The disease page sends the selected crop photo to the configured AI vision provider for an image-based diagnosis. The crop recommendation dataset above contains no crop disease image labels and is not used to train that diagnosis.</p>
+        <p>No separate disease image dataset or dataset credit is documented in this project. AI results are estimates and should be checked against local agricultural guidance.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="sprout-face" viewBox="0 0 64 64">
+    <path d="M32 16V10" stroke="#B8845F" stroke-width="2.6" stroke-linecap="round"/>
+    <path d="M32 11C32 5 28 2 21 3C21 9 25 12 32 11Z" fill="#E48AB3"/>
+    <path d="M32 11C32 5 36 2 43 3C43 9 39 12 32 11Z" fill="#F4B6D2"/>
+    <circle cx="32" cy="39" r="22" fill="#f6e7bd"/>
+    <circle cx="24" cy="38" r="2.8" fill="#2b2118"/><circle cx="40" cy="38" r="2.8" fill="#2b2118"/>
+    <circle cx="23.2" cy="37" r="1" fill="#fff"/><circle cx="39.2" cy="37" r="1" fill="#fff"/>
+    <ellipse cx="17.5" cy="45" rx="4" ry="2.6" fill="#f09a86" opacity=".75"/>
+    <ellipse cx="46.5" cy="45" rx="4" ry="2.6" fill="#f09a86" opacity=".75"/>
+    <path d="M27 46C29 49.5 35 49.5 37 46" stroke="#2b2118" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+  </symbol>
+</svg>
+
+<div class="chat-panel" id="chat-panel" role="dialog" aria-label="Sprout, the farm assistant" hidden>
+  <div class="chat-head">
+    <svg class="chat-avatar" viewBox="0 0 64 64" aria-hidden="true"><use href="#sprout-face"/></svg>
+    <div class="chat-title"><strong>Sprout</strong><span>Your friendly farm helper</span></div>
+    <button class="chat-close" id="chat-close" type="button" aria-label="Close chat">&times;</button>
+  </div>
+  <div class="chat-log" id="chat-log" aria-live="polite"></div>
+  <div class="chat-chips" id="chat-chips"></div>
+  <form class="chat-form" id="chat-form" autocomplete="off">
+    <input id="chat-input" type="text" maxlength="500" placeholder="Ask me anything about your farm…" aria-label="Your message" />
+    <button id="chat-send" type="submit" aria-label="Send">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </button>
+  </form>
+  <p class="chat-note">Sprout is an AI and can make mistakes. For serious problems, ask a local expert.</p>
+</div>
+
+<script src="Script.js"></script>
+<script src="disease-extras.js"></script>
+<script src="Calculator.js"></script>
+</body>
+</html>
