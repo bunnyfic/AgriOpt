@@ -1,0 +1,39 @@
+{
+  "model_type": "StackingClassifier(RF+KNN+SVM+GB -> LogisticRegression)",
+  "features": [
+    "N",
+    "P",
+    "K",
+    "temperature",
+    "humidity",
+    "ph",
+    "rainfall"
+  ],
+  "classes": [
+    "apple",
+    "banana",
+    "blackgram",
+    "chickpea",
+    "coconut",
+    "coffee",
+    "cotton",
+    "grapes",
+    "jute",
+    "kidneybeans",
+    "lentil",
+    "maize",
+    "mango",
+    "mothbeans",
+    "mungbean",
+    "muskmelon",
+    "orange",
+    "papaya",
+    "pigeonpeas",
+    "pomegranate",
+    "rice",
+    "watermelon"
+  ],
+  "test_accuracy": 0.9931818181818182,
+  "test_macro_f1": 0.9932303468888836,
+  "requires_scaling": true
+}
